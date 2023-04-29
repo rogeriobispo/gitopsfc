@@ -28,6 +28,7 @@ jobs:
         run: |
           cd k8s
           kustomize edit set image goserver=${{ secrets.DOCKER_USERNAME }}/cdgitops:${{ github.sha }}
+
       - name: Commit
         run: |
           git config --global user.email "action@github.com"
