@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
- 
+
       - name: Build
         uses: docker/build-push-action@v1.1.0
         with:
@@ -19,3 +19,26 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ secrets.DOCKER_USERNAME }}/cdgitops
           tags: ${{ github.sha }}, latest
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
+      - name: Update Kubernets resource
+        env:
+          DOKCER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        RUN: |
+          cd k8s
+          kustomize edit set image goserver=${{ secrets.DOCKER_USERNAME }}/cdgitops:${{ github.sha }}
+      - name: Commit
+        run: |
+          git config --global user.email "action@github.com""
+          git config --global user.name "GitHub Action"
+          git add .
+          git commit -m "Update k8s resources"
+
+      - name: Push
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: rogeriobispo/cdgitops
+          branch: main
