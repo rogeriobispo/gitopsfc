@@ -1,0 +1,14 @@
+## GitOps
+### Fluxo de entrega aplicativo
+
+Desenvolvimento -> Versionador de codigo -> Fluxo de Continues Integration -> Fluxo Continues deploy
+-> K8S deploy no ambiente
+
+- após o CI estar ok é gerado uma imagem docker para deploy 
+  que sera usado no fluxo de CD.
+
+### fluxo com GitOps
+Desenvolvimento -> Versionador de codigo -> CI -> CD -> Agente deploys -> K8S deployment
+
+- O agente de deploy escuta uma versão no git e inicia um deploy. 
+- não existe a necessidade de uma imagem register. 
