@@ -11,7 +11,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Build
         uses: docker/build-push-action@v1.1.0
         with:
@@ -26,7 +25,7 @@ jobs:
       - name: Update Kubernets resource
         env:
           DOKCER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        RUN: |
+        run: |
           cd k8s
           kustomize edit set image goserver=${{ secrets.DOCKER_USERNAME }}/cdgitops:${{ github.sha }}
       - name: Commit
