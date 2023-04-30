@@ -6,4 +6,4 @@ resources:
 images:
 - name: goserver
   newName: rogeriobispo/cdgitops
-  newTag: 9a85449833b0ac115e339e7479a41e929b015347
+  newTag: 44e3508ae89c6097c4d5178d957c25ea2f6d258b
